@@ -1,4 +1,4 @@
-<div align="center">
+
 
 # 析数启智 · 教育数据可视分析
 
@@ -27,7 +27,9 @@
 5. **教学优化建议** —— 结合上述分析结果，为题目设计者和课程管理人员提供优化建议。
 
 ---
+演示视频：
 
+---
 ## 📊 数据集
 
 赛题提供了 **15 个班级**从 2023 年 8 月 31 日到 2024 年 1 月 25 日共 **148 天**的学习行为模拟数据：
@@ -55,9 +57,14 @@
 ### 知识体系结构
 
 题目 id 存在重复记录（44 条数据 → **38 个不重复题目**），对应 **8 个知识点**、**15 个从属知识点**。基于 `pyvis` + `networkx` 构建了知识点-从属知识点-题目的三层**交互式网络结构图**：
-
+<div align="center">
+<img width="553" height="386" alt="image" src="https://github.com/user-attachments/assets/647cb184-460e-4581-bd8e-60431ebe637a" />
+  </div>
+  
 - 🔵 蓝色节点 = 知识点
+
 - 🟢 绿色节点 = 从属知识点
+
 - 🔴 红色节点 = 题目
 
 支持鼠标拖动节点、调节位置，便于分析三者之间的关联关系。
@@ -89,6 +96,11 @@
 - **折柱混合图**：以知识点为横轴，柱状图表示完全正确率/部分正确率/总正确率，折线表示得分率——**柱状高度和折线点不匹配的知识点即薄弱环节**。
 
 支持输入学生 id 查询单个学习者情况（额外展示最后一天的得分率数据）。
+<div align="center">
+<img width="516" height="186" alt="image" src="https://github.com/user-attachments/assets/34174330-e8b8-450b-9242-99a3b01a95ad" />
+<img width="553" height="190" alt="image" src="https://github.com/user-attachments/assets/379c884e-3157-4355-95fe-80a836934e6c" />
+
+  </div>
 
 ### 任务二：学习者画像
 
@@ -99,6 +111,15 @@
 | **热力图** | 周内每小时做题数目分布（答题高峰时段），每个格子显示具体数值，支持选择单天或单个时段查看 |
 | **旭日图** | 从中心向外辐射的多个环形层次：知识点 → 从属知识点 → 各层次比例，扇区大小随做题数目调整，点击可展开下钻 |
 | **条形图** | 各题目的正确答题率横向对比，比率差距直观清晰 |
+<div align="center">
+<img width="553" height="223" alt="image" src="https://github.com/user-attachments/assets/e03930c8-c121-42bb-824a-a2ed9f82d902" />
+  </div>
+  <div align="center">
+<img width="452" height="226" alt="image" src="https://github.com/user-attachments/assets/9a4f7745-ca2f-4af0-9666-226299b60890" />
+    </div>
+<div align="center">
+<img width="578" height="155" alt="image" src="https://github.com/user-attachments/assets/82239c23-25aa-4f34-8c0e-e88ffe8eecc7" />
+</div>
 
 ### 任务三：学习模式与知识掌握建模
 
@@ -116,12 +137,22 @@
 - 🔢 **随机森林 / 梯度提升**显示：总做题数十分重要，编程语言 `Method_LBXr9AiSpQhwNvyGdZL57` 也占据一定比重，使用该方法答题更高效简单；
 - 📊 利用**特征重要性条形图**和**跨模型特征重要性热力图**对比各模型的特征权重；
 - 🔍 使用 **SHAP 值**（基于 Shapley 值的博弈论解释方法）解释最佳模型（随机森林）的预测贡献。
+  
+<div align="center">
+<img width="254" height="161" alt="image" src="https://github.com/user-attachments/assets/8bc8908a-e704-4fbb-a520-746ae505efa2" />
+<img width="401" height="269" alt="image" src="https://github.com/user-attachments/assets/4c60d7eb-3069-4689-ae40-2fe5ba15f87d" />
+<img width="199" height="204" alt="image" src="https://github.com/user-attachments/assets/07268838-f2d6-42c4-9c12-6a462facbef2" />
+</div>
 
 ### 任务四：不合理题目识别
 
 采用**桑基图**呈现知识点 → 从属知识点 → 题目的层级流动关系，并添加颜色映射：**蓝色代表正确率低，红色代表正确率高**。若知识点/从属知识点节点颜色较深（掌握好）而对应题目节点颜色较浅（正确率低），即说明该题目难度超出学习者能力范围，为不合理题目。
 
 支持切换展示全部正确率 / 部分正确率 / 总体正确率，也可输入学生 id 查看个体情况。
+
+<div align="center">
+<img width="551" height="163" alt="image" src="https://github.com/user-attachments/assets/ff55e6a9-5b60-45d6-8ee8-d52e23fe2855" />
+</div>
 
 ### 任务五：教学优化建议
 
@@ -146,46 +177,6 @@
 | 旭日图 | 点击扇区进入下钻展开 |
 | 桑基图 | 拖动节点位置 |
 | 网络图 | 鼠标拖动节点、点击高亮节点或边 |
-
----
-
-## 🚀 快速开始
-
-### 1. 安装依赖
-bash
-pip install pandas numpy matplotlib plotly networkx pyvis scikit-learn xgboost catboost shap scipy
-
-
-### 2. 准备数据
-
-data/
-├── students.csv # 学习者基本信息（1364 条）
-├── titles.csv # 题目基本信息（44 条）
-└── logs/
-├── Class1.csv # 各班级答题日志
-├── Class2.csv
-└── … # 共 15 个班级文件
-
-
-### 3. 运行分析
-
-按 notebook 顺序执行：数据预处理 → 知识点指标提取 → 可视化展示 → 回归建模 → 模型解释。
-
----
-
-## 📁 项目结构
-
-education-visual-analytics/
-├── notebooks/
-│ ├── 01_preprocessing.ipynb # 数据清洗与预处理
-│ ├── 02_analysis.ipynb # 数据分析与指标提取
-│ ├── 03_visualization.ipynb # 任务一~四可视化实现
-│ └── 04_modeling.ipynb # 任务三回归建模与 SHAP 解释
-├── output/
-│ └── network.html # 知识体系交互网络图（pyvis 生成）
-├── data/ # 赛题数据
-└── README.md
-
 
 ---
 
